@@ -1,0 +1,35 @@
+extends layout
+
+block title
+    | Список завдань
+
+block content
+    h1 Мій список завдань
+
+    form#taskForm
+        input#taskTitle(
+            type="text",
+            name="title",
+            placeholder="Введіть нове завдання...",
+            minlength="3",
+            maxlength="100"
+        )
+        button(type="submit") Додати
+
+    ul#taskList
+        each task in tasks
+            li(data-id=task.id)
+                if task.completed
+                    span.task-title(style="text-decoration: line-through; color: green;")= task.title
+                    strong.task-status  — Виконано
+                else
+                    span.task-title= task.title
+                    strong.task-status  — Не виконано
+
+                button.toggle-btn(type="button") 
+                    | #{task.completed ? 'Скасувати' : 'Виконати'}
+
+                button.delete-btn(type="button") Видалити
+
+block scripts
+    script(src="/js/main.js")
